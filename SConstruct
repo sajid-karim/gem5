@@ -151,7 +151,7 @@ AddOption('--pprof', action='store_true',
 AddOption('--duplicate-sources', action='store_true', default=False,
           dest='duplicate_sources',
           help='Create symlinks to sources in the build directory')
-AddOption('--no-duplicate-sources', action='store_false',
+AddOption('--no-duplicate-sources', action='store_true', default=True,
           dest='duplicate_sources',
           help='Do not create symlinks to sources in the build directory')
 
@@ -277,8 +277,8 @@ main.Append(CPPPATH=[Dir('ext')])
 
 # Add shared top-level headers
 main.Prepend(CPPPATH=Dir('include'))
-if not GetOption('duplicate_sources'):
-    main.Prepend(CPPPATH=Dir('src'))
+# if not GetOption('duplicate_sources'):
+#     main.Prepend(CPPPATH=Dir('src'))
 
 
 ########################################################################

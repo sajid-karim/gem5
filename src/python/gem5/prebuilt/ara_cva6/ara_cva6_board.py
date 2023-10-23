@@ -38,10 +38,10 @@ from gem5.resources.resource import AbstractResource
 from gem5.components.memory import SingleChannelDDR3_1600
 from gem5.utils.requires import requires
 from gem5.isas import ISA
-from python.gem5.prebuilt.cva6.cva6_cache import (
+from python.gem5.prebuilt.ara_cva6.ara_cva6_cache import (
     cva6CacheHierarchy,
 )
-from python.gem5.prebuilt.cva6.cva6_proc import U74Processor
+from python.gem5.prebuilt.ara_cva6.ara_cva6_proc import U74Processor
 
 import m5
 
@@ -53,7 +53,7 @@ from m5.objects import (
     AddrRange,
     IOXBar,
     RiscvRTC,
-    cva6,
+    ara_cva6,
     CowDiskImage,
     RawDiskImage,
     RiscvMmioVirtIO,
@@ -135,7 +135,7 @@ class cva6Board(AbstractSystemBoard, KernelDiskWorkload, SEBinaryWorkload):
             self.workload = RiscvLinux()
 
             # Contains a CLINT, PLIC, UART, and some functions for the dtb, etc.
-            self.platform = cva6()
+            self.platform = ara_cva6()
             # Note: This only works with single threaded cores.
             self.platform.plic.n_contexts = self.processor.get_num_cores() * 2
             self.platform.attachPlic()

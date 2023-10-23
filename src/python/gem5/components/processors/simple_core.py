@@ -98,7 +98,7 @@ class SimpleCore(BaseCPUCore):
 
         if isa not in _isa_string_map:
             raise NotImplementedError(
-                f"ISA '{isa.name}' does not have an"
+                f"ISA '{isa.name}' does not have an "
                 "entry in `AbstractCore.cpu_simobject_factory._isa_string_map`"
             )
 

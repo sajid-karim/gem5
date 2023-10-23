@@ -83,7 +83,8 @@ class U74FUPool(MinorFUPool):
 
 
 class U74BP(TournamentBP):
-    BTBEntries = 16
+    numThreads = 1
+    btb = SimpleBTB(numEntries=16)
     RASSize = 6
     localHistoryTableSize = 4096  # is 3.6 KiB but gem5 requires power of 2
 
@@ -169,6 +170,10 @@ class U74Core(AbstractCore):
 
     def get_simobject(self) -> BaseCPU:
         return self.core
+
+    @overrides(AbstractCore)
+    def is_kvm_core(self) -> bool:
+        return False
 
     @overrides(AbstractCore)
     def get_isa(self) -> ISA:

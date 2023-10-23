@@ -558,6 +558,9 @@ class ISAParser(Grammar):
 
         symbols = ("makeList", "re")
         self.exportContext = {s: eval(s) for s in symbols}
+        self.maxInstSrcRegs = 0
+        self.maxInstDestRegs = 0
+
         self.exportContext.update(
             {
                 "overrideInOperand": overrideInOperand,
@@ -734,6 +737,15 @@ class ISAParser(Grammar):
                 print(f'#include "{fn}"', file=f)
                 print("} // namespace %s" % self.namespace, file=f)
                 print("} // namespace gem5", file=f)
+        # max_inst_regs.hh
+        self.update(
+            "max_inst_regs.hh",
+            """namespace %(namespace)s {
+    const int MaxInstSrcRegs = %(maxInstSrcRegs)d;
+    const int MaxInstDestRegs = %(maxInstDestRegs)d;
+    const int MaxMiscDestRegs = %(maxMiscDestRegs)d;\n}\n"""
+            % self,
+        )
 
     scaremonger_template = """// DO NOT EDIT
 // This file was automatically generated from an ISA description:

@@ -32,6 +32,8 @@
 #include <string>
 
 #include "arch/riscv/insts/static_inst.hh"
+#include "arch/riscv/insts/vector_static_inst.hh"
+#include "arch/riscv/registers.hh"
 #include "arch/riscv/regs/misc.hh"
 #include "arch/riscv/regs/vector.hh"
 #include "arch/riscv/utility.hh"

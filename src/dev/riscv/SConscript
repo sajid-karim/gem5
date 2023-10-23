@@ -30,7 +30,7 @@
 
 Import('*')
 
-SimObject('HiFive.py', sim_objects=['HiFiveBase', 'GenericRiscvPciHost'],
+SimObject('ara_cva6.py', sim_objects=['ara_cva6', 'GenericRiscvPciHost'],
           tags='riscv isa')
 SimObject('LupV.py', sim_objects=['LupV'], tags='riscv isa')
 SimObject('Clint.py', sim_objects=['Clint'], tags='riscv isa')
@@ -46,7 +46,7 @@ DebugFlag('VirtIOMMIO', tags='riscv isa')
 
 Source('pci_host.cc', tags='riscv isa')
 
-Source('hifive.cc', tags='riscv isa')
+Source('ara_cva6.cc', tags='riscv isa')
 Source('lupv.cc', tags='riscv isa')
 Source('clint.cc', tags='riscv isa')
 Source('plic_device.cc', tags='riscv isa')

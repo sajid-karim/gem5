@@ -111,11 +111,13 @@ SCons.Tool.SourceFileScanner.add_scanner('.cc.inc', SCons.Tool.CScanner)
 # Now create a Builder object that uses isa_parser.py to generate C++
 # output from the ISA description (*.isa) files.
 #
+
 parser_files = []
 for root, dirnames, filenames in os.walk(Dir("isa_parser").srcnode().abspath):
     for name in filenames:
         _, ext = os.path.splitext(name)
         if ext == '.py':
+            print("----------------------------------------------",name)
             parser_files.append(os.path.join(root, name))
 micro_asm_py = File('micro_asm.py')
 
@@ -196,6 +198,12 @@ def ISADesc(desc, decoder_splits=1, exec_splits=1, tags=None, add_tags=None):
 
     add_gen('exec-g.cc.inc')
     add_gen('exec-ns.cc.inc')
+
+    add_gen('max_inst_regs.hh')
+
+
+    add_gen('max_inst_regs.hh')
+
 
 
     # These generated files are also top level sources.
