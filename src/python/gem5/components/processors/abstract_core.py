@@ -29,15 +29,22 @@ from typing import Optional, List
 
 from ...isas import ISA
 
+from ...utils.requires import requires
+
+
 from m5.objects import BaseMMU, Port, SubSystem, PcCountTrackerManager
 from m5.params import PcCountPair
+from .cpu_types import CPUTypes
 
 
 class AbstractCore(SubSystem):
     __metaclass__ = ABCMeta
 
-    def __init__(self):
+    def __init__(self, cpu_type: CPUTypes):
         super().__init__()
+        if cpu_type == CPUTypes.KVM:
+            requires(kvm_required=True)
+        self._cpu_type = cpu_type
 
     @abstractmethod
     def get_isa(self) -> ISA:

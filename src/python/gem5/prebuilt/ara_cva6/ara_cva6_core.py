@@ -26,6 +26,7 @@
 from typing import Optional
 from gem5.utils.requires import requires
 from gem5.components.processors.abstract_core import AbstractCore
+from gem5.components.processors.simple_core import SimpleCore
 from gem5.components.processors.cpu_types import CPUTypes
 from gem5.isas import ISA
 from gem5.utils.override import overrides
@@ -83,7 +84,8 @@ class U74FUPool(MinorFUPool):
 
 
 class U74BP(TournamentBP):
-    BTBEntries = 16
+    # BTBEntries = 16
+    btb = SimpleBTB(numEntries=16)
     RASSize = 6
     localHistoryTableSize = 4096  # is 3.6 KiB but gem5 requires power of 2
 
@@ -169,6 +171,10 @@ class U74Core(AbstractCore):
 
     def get_simobject(self) -> BaseCPU:
         return self.core
+
+    @overrides(AbstractCore)
+    def is_kvm_core(self) -> bool:
+        return False
 
     @overrides(AbstractCore)
     def get_isa(self) -> ISA:

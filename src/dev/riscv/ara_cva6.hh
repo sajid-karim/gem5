@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2021 Huawei International
- * Copyright (c) 2016-2018 ARM Limited
  * All rights reserved
  *
  * The license below extends only to copyright in the software and shall
@@ -36,88 +35,43 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __DEV_ARM_VIO_MMIO_HH__
-#define __DEV_ARM_VIO_MMIO_HH__
+#ifndef __DEV_RISCV_ara_cva6_HH__
+#define __DEV_RISCV_ara_cva6_HH__
 
-#include "dev/riscv/ara_cva6.hh"
-#include "dev/riscv/plic_device.hh"
-#include "dev/virtio/base.hh"
+#include "dev/platform.hh"
+#include "dev/riscv/clint.hh"
+#include "dev/riscv/plic.hh"
+#include "params/ara_cva6.hh"
 
 namespace gem5
 {
 
-struct RiscvMmioVirtIOParams;
+using namespace RiscvISA;
 
-namespace RiscvISA
-{
-
-class MmioVirtIO : public PlicIntDevice
+class ara_cva6 : public Platform
 {
   public:
-    MmioVirtIO(const RiscvMmioVirtIOParams &params);
-    virtual ~MmioVirtIO();
+    Clint *clint;
+    Plic *plic;
+    int uartIntID;
 
-  protected: // BasicPioDevice
-    Tick read(PacketPtr pkt) override;
-    Tick write(PacketPtr pkt) override;
+  public:
+    typedef ara_cva6Params Params;
+    ara_cva6(const Params &params);
 
-  protected:
-    /** @{ */
-    /** Offsets into VirtIO MMIO space. */
+    void postConsoleInt() override;
 
-    enum : Addr
-    {
-        OFF_MAGIC = 0x00,
-        OFF_VERSION = 0x04,
-        OFF_DEVICE_ID = 0x08,
-        OFF_VENDOR_ID = 0x0C,
-        OFF_HOST_FEATURES = 0x10,
-        OFF_HOST_FEATURES_SELECT = 0x14,
-        OFF_GUEST_FEATURES = 0x20,
-        OFF_GUEST_FEATURES_SELECT = 0x24,
-        OFF_GUEST_PAGE_SIZE = 0x28,
-        OFF_QUEUE_SELECT = 0x30,
-        OFF_QUEUE_NUM_MAX = 0x34,
-        OFF_QUEUE_NUM = 0x38,
-        OFF_QUEUE_ALIGN = 0x3C,
-        OFF_QUEUE_PFN = 0x40,
-        OFF_QUEUE_NOTIFY = 0x50,
-        OFF_INTERRUPT_STATUS = 0x60,
-        OFF_INTERRUPT_ACK = 0x64,
-        OFF_STATUS = 0x70,
-        OFF_CONFIG = 0x100,
-    };
+    void clearConsoleInt() override;
 
-    /** @} */
+    void postPciInt(int line) override;
 
-    enum
-    {
-        INT_USED_RING = 1 << 0,
-        INT_CONFIG = 1 << 1,
-    };
+    void clearPciInt(int line) override;
 
-    static const uint32_t MAGIC = 0x74726976;
-    static const uint32_t VERSION = 1;
-    static const uint32_t VENDOR_ID = 0x1AF4;
+    void serialize(CheckpointOut &cp) const override;
 
-
-    uint32_t read(Addr offset);
-    void write(Addr offset, uint32_t value);
-
-    void kick();
-    void setInterrupts(uint32_t value);
-
-    uint32_t hostFeaturesSelect;
-    uint32_t guestFeaturesSelect;
-    uint32_t pageSize;
-    uint32_t interruptStatus;
-
-  protected: // Params
-    VirtIODeviceBase &vio;
+    void unserialize(CheckpointIn &cp) override;
 };
-
-} // namespace RiscvISA
 
 } // namespace gem5
 
-#endif // __DEV_ARM_VIO_MMIO_HH__
+#endif  // __DEV_RISCV_cva6_HH__
