@@ -60,7 +60,7 @@ public:
     * requestGrant function is used by the scalar to ask for permision to send
     * a new vector instruction to the vector engine.
     */
-    bool requestGrant(RiscvISA::VectorStaticInst* insn);
+    bool requestGrant(gem5::RiscvISA::VectorStaticInst* insn);
 
     /**
     * sendCommand function receives the command from the scalar core
@@ -68,7 +68,7 @@ public:
     * a granted signal  from the vector engine must be received, otherwise,
     * the command must not be send.
     */
-    void sendCommand(RiscvISA::VectorStaticInst *vinst ,ExecContextPtr& xc ,
+    void sendCommand(gem5::RiscvISA::VectorStaticInst *vinst ,ExecContextPtr& xc ,
         uint64_t src1, uint64_t src2, std::function<void()> done_callback);
 
     /**

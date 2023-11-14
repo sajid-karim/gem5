@@ -54,7 +54,7 @@ Datapath::~Datapath()
 
 void
 Datapath::startTicking(
-    VectorLane& data_op_unit, RiscvISA::VectorStaticInst& insn,
+    VectorLane& data_op_unit, gem5::RiscvISA::VectorStaticInst& insn,
     uint64_t src_count, uint64_t dst_count, uint64_t vsew,
     uint64_t slide_count, uint64_t src1,
     std::function<void(uint8_t*,uint8_t,bool)> data_callback)

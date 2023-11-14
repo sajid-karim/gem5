@@ -365,7 +365,7 @@ class ResponsePort : public Port, public AtomicResponseProtocol,
 
     ResponsePort(const std::string& name, PortID id=InvalidPortID);
 
-    virtual ~ResponsePort();
+     ~ResponsePort();
 
     /**
      * Find out if the peer request port is snooping or not.

@@ -82,7 +82,7 @@ private:
     int valid_elements;
     VectorEngine* vectorwrapper;
 public:
-    Stats::Scalar VectorROBentriesUsed;
+    statistics::Scalar VectorROBentriesUsed;
 };
 
 

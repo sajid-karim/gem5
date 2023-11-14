@@ -43,6 +43,8 @@
 #include "params/InstQueue.hh"
 #include "sim/ticked_object.hh"
 
+using namespace gem5;
+
 class VectorEngine;
 //class ExecContextPtr;
 //class ExecContext;
@@ -54,7 +56,7 @@ public:
     class QueueEntry
     {
         public:
-        QueueEntry(RiscvISA::VectorStaticInst& insn, VectorDynInst *dyn_insn,
+        QueueEntry(gem5::RiscvISA::VectorStaticInst& insn, VectorDynInst *dyn_insn,
             ExecContextPtr& _xc, std::function<void()> dependencie_callback,
             uint64_t src1,uint64_t src2,
             uint64_t rename_vtype,uint64_t rename_vl):
@@ -68,7 +70,7 @@ public:
         ~QueueEntry() {}
 
         std::function<void()> dependencie_callback;
-        RiscvISA::VectorStaticInst& insn;
+        gem5::RiscvISA::VectorStaticInst& insn;
         VectorDynInst     *dyn_insn;
         ExecContextPtr xc;
         uint64_t src1;
@@ -92,9 +94,9 @@ public:
     void regStats() override;
     void evaluate() override;
 
-    void printMemInst(RiscvISA::VectorStaticInst& insn,
+    void printMemInst(gem5::RiscvISA::VectorStaticInst& insn,
     VectorDynInst *vector_dyn_insn);
-    void printArithInst(RiscvISA::VectorStaticInst& insn,
+    void printArithInst(gem5::RiscvISA::VectorStaticInst& insn,
     VectorDynInst *vector_dyn_insn);
 
 protected:
@@ -112,8 +114,8 @@ private:
     //std::function<void(uint8_t*,uint8_t)> dataCallback;
     //std::function<void()> dependencie_callback;
 public:
-    Stats::Scalar VectorMemQueueSlotsUsed;
-    Stats::Scalar VectorArithQueueSlotsUsed;
+    statistics::Scalar VectorMemQueueSlotsUsed;
+    statistics::Scalar VectorArithQueueSlotsUsed;
 };
 
 #endif //__CPU_INST_QUEUE_HH__

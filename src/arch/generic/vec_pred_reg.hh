@@ -43,6 +43,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "arch/generic/vec_reg.hh"
 #include "base/cprintf.hh"
 #include "base/types.hh"
 #include "sim/serialize_handlers.hh"
@@ -422,4 +423,12 @@ operator<<(std::ostream &os, const DummyVecPredRegContainer &d)
 
 } // namespace gem5
 
+constexpr bool DummyVecPredRegHasPackedRepr = false;
+using DummyVecPredReg = gem5::VecPredRegT<DummyVecElem, DummyNumVecElemPerVecReg,
+                                    DummyVecPredRegHasPackedRepr, false>;
+using DummyConstVecPredReg = gem5::VecPredRegT<DummyVecElem,
+                                         DummyNumVecElemPerVecReg,
+                                         DummyVecPredRegHasPackedRepr, true>;
+using DummyVecPredRegContainer = DummyVecPredReg::Container;
+constexpr size_t DummyVecPredRegSizeBits = 8;
 #endif  // __ARCH_GENERIC_VEC_PRED_REG_HH__

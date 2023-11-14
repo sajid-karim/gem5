@@ -68,7 +68,7 @@ const std::vector<std::string> VecRegNames = {
 // vector index
 const int VecMemInternalReg0 = NumVecStandardRegs;
 
-static inline TypedRegClassOps<RiscvISA::VecRegContainer> vecRegClassOps;
+static inline TypedRegClassOps<VecRegContainer> vecRegClassOps;
 
 inline constexpr RegClass vecRegClass =
     RegClass(VecRegClass, VecRegClassName, NumVecRegs, debug::VecRegs).

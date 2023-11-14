@@ -129,7 +129,7 @@ VectorEngine::regStats()
 
 
 bool
-VectorEngine::requestGrant(RiscvISA::VectorStaticInst *insn)
+VectorEngine::requestGrant(gem5::RiscvISA::VectorStaticInst *insn)
 {
     bool rob_entry_available = !vector_rob->rob_full();
     bool queue_slots_available = ((insn->isVectorInstArith()
@@ -201,7 +201,7 @@ VectorEngine::cluster_available()
 }
 
 void
-VectorEngine::printConfigInst(RiscvISA::VectorStaticInst& insn,
+VectorEngine::printConfigInst(gem5::RiscvISA::VectorStaticInst& insn,
     uint64_t src1,uint64_t src2)
 {
     uint64_t pc = insn.getPC();
@@ -210,7 +210,7 @@ VectorEngine::printConfigInst(RiscvISA::VectorStaticInst& insn,
 }
 
 void
-VectorEngine::printMemInst(RiscvISA::VectorStaticInst& insn,
+VectorEngine::printMemInst(gem5::RiscvISA::VectorStaticInst& insn,
     VectorDynInst *vector_dyn_insn)
 {
     uint64_t pc = insn.getPC();
@@ -264,7 +264,7 @@ else if (insn.isStore())
 }
 
 void
-VectorEngine::printArithInst(RiscvISA::VectorStaticInst& insn,
+VectorEngine::printArithInst(gem5::RiscvISA::VectorStaticInst& insn,
     VectorDynInst *vector_dyn_insn)
 {
     uint64_t pc = insn.getPC();
@@ -323,7 +323,7 @@ else if (insn.arith3Srcs()) {
 
 
 void
-VectorEngine::renameVectorInst(RiscvISA::VectorStaticInst& insn,
+VectorEngine::renameVectorInst(gem5::RiscvISA::VectorStaticInst& insn,
     VectorDynInst *vector_dyn_insn)
 {
     /*
@@ -414,7 +414,7 @@ VectorEngine::renameVectorInst(RiscvISA::VectorStaticInst& insn,
 }
 
 void
-VectorEngine::dispatch(RiscvISA::VectorStaticInst& insn, ExecContextPtr& xc,
+VectorEngine::dispatch(gem5::RiscvISA::VectorStaticInst& insn, ExecContextPtr& xc,
     uint64_t src1,uint64_t src2,std::function<void()> dependencie_callback)
 {
     if (insn.isVecConfig()) {
@@ -497,7 +497,7 @@ VectorEngine::dispatch(RiscvISA::VectorStaticInst& insn, ExecContextPtr& xc,
 }
 
 void
-VectorEngine::issue(RiscvISA::VectorStaticInst& insn,VectorDynInst *dyn_insn,
+VectorEngine::issue(gem5::RiscvISA::VectorStaticInst& insn,VectorDynInst *dyn_insn,
     ExecContextPtr& xc ,uint64_t src1 ,uint64_t src2,uint64_t vtype,
     uint64_t vl, std::function<void(Fault fault)> done_callback) {
 
@@ -567,7 +567,7 @@ VectorEngine::VectorMemPort::Tlb_Translation::~Tlb_Translation()
 
 void
 VectorEngine::VectorMemPort::Tlb_Translation::finish(const Fault &_fault,
-    const RequestPtr &_req, ThreadContext *_tc, BaseTLB::Mode _mode)
+    const RequestPtr &_req, ThreadContext *_tc, BaseMMU::Mode _mode)
 {
     fault = _fault;
 }
@@ -623,7 +623,7 @@ VectorEngine::VectorMemPort::startTranslation(Addr addr, uint8_t *data,
 
     //virtual address request constructor (copied the data port request)
     //const int asid = 0;
-    const Addr pc = tc->instAddr();
+    const Addr pc = tc->pcState().instAddr();
     RequestPtr req = std::make_shared<Request>(addr, size, 0,
         owner->VectorCacheMasterId, pc, tc->contextId());
 

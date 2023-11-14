@@ -56,7 +56,7 @@ public:
     void queueData(uint8_t *data);
     void initialize(VectorEngine& vector_wrapper,uint64_t count,
         uint64_t DST_SIZE,uint64_t mem_addr,uint8_t mop,uint64_t stride,
-        bool location, ExecContextPtr& xc,
+        bool location, gem5::ExecContextPtr& xc,
         std::function<void(uint8_t*,uint8_t,bool)> on_item_load);
 
 private:
@@ -75,7 +75,7 @@ private:
 
 public:
     // Stat for number of cache lines read requested
-    Stats::Scalar Cache_line_r_req;
+    statistics::Scalar Cache_line_r_req;
 };
 
 #endif //__CPU_MEM_UNIT_READ_TIMING__

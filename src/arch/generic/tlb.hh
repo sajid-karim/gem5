@@ -67,6 +67,8 @@ class BaseTLB : public SimObject
     BaseTLB *_nextLevel;
 
   public:
+    enum Mode { Read, Write, Execute };
+
     virtual void demapPage(Addr vaddr, uint64_t asn) = 0;
 
     virtual Fault translateAtomic(

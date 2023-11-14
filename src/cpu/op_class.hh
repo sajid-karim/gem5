@@ -134,8 +134,27 @@ static const OpClass VectorFloatReduceOp = enums::VectorFloatReduce;
 static const OpClass VectorMiscOp = enums::VectorMisc;
 static const OpClass VectorIntegerExtensionOp = enums::VectorIntegerExtension;
 static const OpClass VectorConfigOp = enums::VectorConfig;
+static const OpClass VectorArith1SrcOp = enums::VectorArith1Src;
+static const OpClass VectorArith2SrcOp = enums::VectorArith2Src;
+static const OpClass VectorArith3SrcOp = enums::VectorArith3Src;
+static const OpClass VectorMaskLogicalOp = enums::VectorMaskLogical;
+static const OpClass VectorReductionOp = enums::VectorReduction;
+static const OpClass VectorConvertIntToFPOp = enums::VectorConvertIntToFP;
+static const OpClass VectorConvertFPToIntOp = enums::VectorConvertFPToInt;
+static const OpClass VectorWConvertFPToIntOp = enums::VectorWConvertFPToInt;
+static const OpClass VectorWConvertIntToFPOp = enums::VectorWConvertIntToFP;
+static const OpClass VectorWConvertFPToFPOp = enums::VectorWConvertFPToFP;
+static const OpClass VectorNConvertFPToIntOp = enums::VectorNConvertFPToInt;
+static const OpClass VectorNConvertIntToFPOp = enums::VectorNConvertIntToFP;
+static const OpClass VectorNConvertFPToFPOp = enums::VectorNConvertFPToFP;
+static const OpClass VectorFPCompareOp = enums::VectorFPCompare;
+static const OpClass VectorIntCompareOp = enums::VectorIntCompare;
+static const OpClass VectorSlideUpOp = enums::VectorSlideUp;
+static const OpClass VectorSlideDownOp = enums::VectorSlideDown;
+static const OpClass VectorMemoryLoadOp = enums::VectorMemoryLoad;
+static const OpClass VectorMemoryStoreOp = enums::VectorMemoryStore;
+static const OpClass VectorToScalarOp = enums::VectorToScalar;
 static const OpClass Num_OpClasses = enums::Num_OpClass;
-
 } // namespace gem5
 
 #endif // __CPU__OP_CLASS_HH__

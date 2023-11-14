@@ -33,9 +33,13 @@
 
 #include <string>
 
+#include "arch/generic/types.hh"
 #include "arch/riscv/registers.hh"
 #include "arch/riscv/types.hh"
 #include "cpu/static_inst.hh"
+
+namespace gem5
+{
 
 namespace RiscvISA
 {
@@ -58,14 +62,15 @@ struct VecStaticInstFlags
 };
 */
 /* VectorStaticInst holds the info of all vector instructions */
-class VectorStaticInst : public StaticInst//, public VecStaticInstFlags
+class VectorStaticInst : public gem5::StaticInst
 {
+
 protected:
     using StaticInst::StaticInst;
     //std::bitset<NumVecFlags> vecflags;
 
 public:
-      void advancePC(PCState &pc) const override { pc.advance(); }
+      virtual void advancePC(PCState &pc) const { pc.advance(); }
       /* vector instruction name*/
       virtual std::string getName() const = 0;
 
@@ -158,17 +163,17 @@ private:
 class RiscvVectorInsn : public VectorStaticInst
 {
   protected:
-  RiscvVectorInsn(const char *mnem, MachInst _machInst, OpClass __opClass):
-      VectorStaticInst(mnem, _machInst, __opClass),
-      b(_machInst),mnemo(mnem){}
+    RiscvVectorInsn(const char *mnem, gem5::RiscvISA::MachInst _machInst, OpClass __opClass):
+      VectorStaticInst(mnem, __opClass), b(_machInst), mnemo(mnem) {}
   ~RiscvVectorInsn() {}
+
 
   std::string getName() const  override { return mnemo; }
 
   std::string regName(RegIndex reg) const;
 
   virtual std::string generateDisassembly(Addr pc,
-          const Loader::SymbolTable *symtab) const = 0;
+          const loader::SymbolTable *symtab) const = 0;
 
   uint32_t bits() { return b; }
 
@@ -295,6 +300,7 @@ private:
   const char *mnemo;
 };
 
-}
+} // namespace RiscvISA
+} // namespace gem5
 
 #endif // __ARCH_RISCV_VECTOR_STATIC_INSTS_HH__

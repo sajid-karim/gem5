@@ -41,6 +41,8 @@
 #include "sim/faults.hh"
 #include "sim/sim_object.hh"
 
+using namespace gem5;
+
 VectorMemUnit::VectorMemUnit(const VectorMemUnitParams *p) :
     SimObject(p),
     occupied(false),
@@ -60,7 +62,7 @@ bool VectorMemUnit::isOccupied()
 }
 
 void VectorMemUnit::issue(VectorEngine& vector_wrapper,
-    RiscvISA::VectorStaticInst& insn,VectorDynInst *dyn_insn,
+    gem5::RiscvISA::VectorStaticInst& insn,VectorDynInst *dyn_insn,
     ExecContextPtr& xc, uint64_t src1,uint64_t src2,uint64_t vtype,
     uint64_t vl,std::function<void(Fault fault)> done_callback)
 {

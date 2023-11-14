@@ -565,7 +565,7 @@ mappingParamIn(CheckpointIn &cp, const char* sectionName,
  *
  * @ingroup api_serialize
  */
-#define SERIALIZE_SCALAR(scalar)        paramOut(cp, #scalar, scalar)
+#define SERIALIZE_SCALAR(scalar)        gem5::paramOut(cp, #scalar, scalar)
 
 /**
  * \def UNSERIALIZE_SCALER(scalar)

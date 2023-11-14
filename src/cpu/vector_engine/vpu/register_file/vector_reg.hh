@@ -48,18 +48,18 @@
 
 class VectorRegister : public ClockedObject
 {
-public:
-    class VectorRegisterPort : public QueuedSlavePort
+ public:
+    class VectorRegisterPort : public QueuedResponsePort
     {
-      public:
+     public:
         VectorRegisterPort(const std::string& name,
             VectorRegister& vector_reg);
 
       protected:
-        Tick recvAtomic(PacketPtr pkt) override;
-        void recvFunctional(PacketPtr pkt) override;
-        bool recvTimingReq(PacketPtr pkt) override;
-        AddrRangeList getAddrRanges() const override;
+        Tick recvAtomic(PacketPtr pkt);
+        void recvFunctional(PacketPtr pkt);
+        bool recvTimingReq(PacketPtr pkt);
+        AddrRangeList getAddrRanges() const;
 
       private:
         RespPacketQueue queue;
@@ -99,10 +99,10 @@ private:
     //the physical vector_reg storage
     uint8_t * data;
 public:
-    Stats::Scalar numReads_64bit_elements;
-    Stats::Scalar numWritess_64bit_elements;
-    Stats::Scalar numReads_perLane_64bit_elements;
-    Stats::Scalar numWritess_perLane_64bit_elements;
+    statistics::Scalar numReads_64bit_elements;
+    statistics::Scalar numWritess_64bit_elements;
+    statistics::Scalar numReads_perLane_64bit_elements;
+    statistics::Scalar numWritess_perLane_64bit_elements;
 };
 
 #endif //__CPU_VECTOR_REG_HH__

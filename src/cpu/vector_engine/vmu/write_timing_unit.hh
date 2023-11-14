@@ -80,7 +80,7 @@ private:
     VectorEngine* vectorwrapper;
 public:
     // Stat for number of cache lines write requested
-    Stats::Scalar Cache_line_w_req;
+    statistics::Scalar Cache_line_w_req;
 };
 
 #endif //__CPU_MEM_UNIT_WRITE_TIMING__

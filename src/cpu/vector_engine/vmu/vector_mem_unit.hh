@@ -52,7 +52,7 @@ class VectorMemUnit : public SimObject
     ~VectorMemUnit();
 
     bool isOccupied();
-    void issue(VectorEngine& vector_wrapper,RiscvISA::VectorStaticInst& insn,
+    void issue(VectorEngine& vector_wrapper,gem5::RiscvISA::VectorStaticInst& insn,
       VectorDynInst *dyn_insn, ExecContextPtr& xc,
       uint64_t src1, uint64_t src2,
       uint64_t vtype,uint64_t vl,

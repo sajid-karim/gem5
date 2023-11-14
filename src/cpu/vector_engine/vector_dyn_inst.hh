@@ -37,6 +37,8 @@
 
 class VectorStaticInst;
 
+using namespace gem5;
+
 class VectorDynInst
 {
 public:
@@ -70,18 +72,18 @@ VectorDynInst() : vinst(NULL),
   uint16_t get_rob_entry() { return rob_entry; }
   void set_rob_entry(uint16_t val) { rob_entry  = val; }
 
-  RiscvISA::VectorStaticInst*
+  gem5::RiscvISA::VectorStaticInst*
   get_VectorStaticInst() {
     return vinst;
   }
 
   void
-  set_VectorStaticInst(RiscvISA::VectorStaticInst* instruction){
+  set_VectorStaticInst(gem5::RiscvISA::VectorStaticInst* instruction){
     vinst  = instruction;
     }
 
 private:
-  RiscvISA::VectorStaticInst *vinst;
+  gem5::RiscvISA::VectorStaticInst *vinst;
   uint16_t  renamed_src1;
   uint16_t  renamed_src2;
   uint16_t  renamed_src3;

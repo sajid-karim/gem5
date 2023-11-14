@@ -362,7 +362,7 @@ InstQueue::evaluate()
 }
 
 void
-InstQueue::printMemInst(RiscvISA::VectorStaticInst& insn,
+InstQueue::printMemInst(gem5::RiscvISA::VectorStaticInst& insn,
     VectorDynInst *vector_dyn_insn)
 {
     uint64_t pc = insn.getPC();
@@ -426,7 +426,7 @@ InstQueue::printMemInst(RiscvISA::VectorStaticInst& insn,
 }
 
 void
-InstQueue::printArithInst(RiscvISA::VectorStaticInst& insn,
+InstQueue::printArithInst(gem5::RiscvISA::VectorStaticInst& insn,
     VectorDynInst *vector_dyn_insn)
 {
     uint64_t pc = insn.getPC();

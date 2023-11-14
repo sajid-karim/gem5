@@ -41,7 +41,7 @@
 #include "sim/sim_object.hh"
 
 VectorEngineInterface::VectorEngineInterface(VectorEngineInterfaceParams *p) :
-SimObject(p),vector_engine(p->vector_engine)
+SimObject(*p),vector_engine(p->vector_engine)
 {
 }
 
@@ -50,7 +50,7 @@ VectorEngineInterface::~VectorEngineInterface()
 }
 
 bool
-VectorEngineInterface::requestGrant(RiscvISA::VectorStaticInst* vinst)
+VectorEngineInterface::requestGrant(gem5::RiscvISA::VectorStaticInst* vinst)
 {
     bool grant = vector_engine->requestGrant(vinst);
     DPRINTF(VectorEngineInterface,
@@ -59,7 +59,7 @@ VectorEngineInterface::requestGrant(RiscvISA::VectorStaticInst* vinst)
 }
 
 void
-VectorEngineInterface::sendCommand(RiscvISA::VectorStaticInst* vinst ,
+VectorEngineInterface::sendCommand(gem5::RiscvISA::VectorStaticInst* vinst ,
     ExecContextPtr& xc ,
         uint64_t src1, uint64_t src2,
         std::function<void()> done_callback)

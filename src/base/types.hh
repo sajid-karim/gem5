@@ -46,6 +46,10 @@
 namespace gem5
 {
 
+/** uint64_t constant */
+#define ULL(N)          ((uint64_t)N##ULL)
+/** int64_t constant */
+#define LL(N)           ((int64_t)N##LL)
 /** Statistics counter type.  Not much excuse for not using a 64-bit
  * integer here, but if you're desperate and only run short
  * simulations you could make this 32 bits.
@@ -149,6 +153,8 @@ typedef uint64_t Addr;
 typedef uint16_t MicroPC;
 
 static const MicroPC MicroPCRomBit = 1 << (sizeof(MicroPC) * 8 - 1);
+
+typedef uint64_t RegVal;
 
 static inline MicroPC
 romMicroPC(MicroPC upc)

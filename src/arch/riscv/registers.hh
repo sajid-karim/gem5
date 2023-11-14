@@ -53,9 +53,10 @@
 #include "arch/generic/vec_pred_reg.hh"
 #include "arch/generic/vec_reg.hh"
 #include "arch/riscv/generated/max_inst_regs.hh"
-#include "arch/riscv/isa_traits.hh"
+#include "base/bitunion.hh"
 #include "base/types.hh"
 
+using namespace gem5;
 namespace RiscvISA {
 
 using RiscvISAInst::MaxInstSrcRegs;
@@ -126,7 +127,7 @@ const std::vector<std::string> FloatRegNames = {
     "ft8", "ft9", "ft10", "ft11"
 };
 
-const std::vector<std::string> VectorRegNames ={
+const std::vector<std::string> VectorRegNames = {
     "v0",   "v1",   "v2",   "v3",   "v4",   "v5",   "v6",   "v7",
     "v8",   "v9",   "v10",  "v11",  "v12",  "v13",  "v14",  "v15",
     "v16",  "v17",  "v18",  "v19",  "v20",  "v21",  "v22",  "v23",
@@ -265,8 +266,8 @@ enum MiscRegIndex
 
     NUM_MISCREGS
 };
-const int NumMiscRegs = NUM_MISCREGS;
 
+const int NumMiscRegs = NUM_MISCREGS;
 enum CSRIndex
 {
     CSR_USTATUS = 0x000,
@@ -744,5 +745,4 @@ const std::map<int, RegVal> CSRMasks = {
 };
 
 }
-
 #endif // __ARCH_RISCV_REGISTERS_HH__

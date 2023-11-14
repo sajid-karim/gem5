@@ -81,16 +81,16 @@
  */
 class VectorEngine : public SimObject
 {
-public:
+ public:
     class VectorMemPort : public MasterPort
     {
-      public:
+     public:
         VectorMemPort(const std::string& name, VectorEngine* owner,
             uint8_t channels);
         ~VectorMemPort();
 
-        bool recvTimingResp(PacketPtr pkt) override;
-        void recvReqRetry() override;
+        bool recvTimingResp(PacketPtr pkt) ;
+        void recvReqRetry() ;
 
         bool startTranslation(Addr addr, uint8_t *data, uint64_t size,
             BaseTLB::Mode mode, ThreadContext *tc, uint64_t req_id,
@@ -103,7 +103,7 @@ public:
         std::vector< std::deque<PacketPtr> > laCachePktQs;
         VectorEngine *owner;
 
-        class Tlb_Translation : public BaseTLB::Translation
+        class Tlb_Translation : public BaseMMU::Translation
         {
           public:
             Tlb_Translation(VectorEngine *owner);
@@ -112,7 +112,7 @@ public:
             void markDelayed() override;
             /** TLB interace */
             void finish(const Fault &_fault,const RequestPtr &_req,
-                ThreadContext *_tc, BaseTLB::Mode _mode) ;
+                ThreadContext *_tc, BaseMMU::Mode _mode) ;
 
             void finish(const Fault _fault, uint64_t latency);
             std::string name();
@@ -132,8 +132,8 @@ public:
             uint64_t channel);
         ~VectorRegPort();
 
-        bool recvTimingResp(PacketPtr pkt) override;
-        void recvReqRetry() override;
+        bool recvTimingResp(PacketPtr pkt) ;
+        void recvReqRetry() ;
 
         bool sendTimingReadReq(Addr addr, uint64_t size,
             uint64_t req_id);
@@ -149,10 +149,10 @@ public:
 
     VectorConfig  *   vector_config;
     //used to identify ports uniquely to whole memory system
-    MasterID VectorCacheMasterId;
+    RequestorID VectorCacheMasterId;
     VectorMemPort vectormem_port;
     //used to identify ports uniquely to whole memory system
-    std::vector<MasterID> VectorRegMasterIds;
+    std::vector<RequestorID> VectorRegMasterIds;
     std::vector<VectorRegPort> VectorRegPorts;
 
     VectorRegister * vector_reg;
@@ -183,28 +183,28 @@ public:
     std::deque<Vector_ReqState *> vector_PendingReqQ;
 
 
-    bool requestGrant(RiscvISA::VectorStaticInst* insn);
+    bool requestGrant(gem5::RiscvISA::VectorStaticInst* insn);
     bool isOccupied();
     bool cluster_available();
 
-    void dispatch(RiscvISA::VectorStaticInst& insn ,ExecContextPtr& xc ,
+    void dispatch(gem5::RiscvISA::VectorStaticInst& insn ,ExecContextPtr& xc ,
         uint64_t src1, uint64_t src2,
         std::function<void()> dependencie_callback);
-    void renameVectorInst(RiscvISA::VectorStaticInst& insn,
+    void renameVectorInst(gem5::RiscvISA::VectorStaticInst& insn,
         VectorDynInst *dyn_insn);
 
-    void issue(RiscvISA::VectorStaticInst& insn, VectorDynInst *dyn_insn,
+    void issue(gem5::RiscvISA::VectorStaticInst& insn, VectorDynInst *dyn_insn,
         ExecContextPtr& xc,
     uint64_t src1 , uint64_t src2,uint64_t vtype,uint64_t vl,
         std::function<void(Fault fault)> done_callback);
 
     void regStats() override;
 
-    void printConfigInst(RiscvISA::VectorStaticInst& insn,
+    void printConfigInst(gem5::RiscvISA::VectorStaticInst& insn,
         uint64_t src1,uint64_t src2);
-    void printMemInst(RiscvISA::VectorStaticInst& insn,
+    void printMemInst(gem5::RiscvISA::VectorStaticInst& insn,
         VectorDynInst *vector_dyn_insn);
-    void printArithInst(RiscvISA::VectorStaticInst& insn,
+    void printArithInst(gem5::RiscvISA::VectorStaticInst& insn,
         VectorDynInst *vector_dyn_insn);
 
 public:
@@ -227,20 +227,20 @@ public:
 
 public:
     // Stat for number of Vector Arithmetic Instructions
-    Stats::Scalar VectorArithmeticIns;
+    statistics::Scalar VectorArithmeticIns;
     // Stat for number of Vector Memory Instructions
-    Stats::Scalar VectorMemIns;
+    statistics::Scalar VectorMemIns;
     // Stat for number of Vector Set Instructions
-    Stats::Scalar VectorConfigIns;
+    statistics::Scalar VectorConfigIns;
     // Stat for number of Vector Operations (1 vector inst = VL operations)
-    Stats::Scalar VectorOp;
+    statistics::Scalar VectorOp;
 
     // Stat for Average VL)
-    Stats::Scalar TotalVL;
+    statistics::Scalar TotalVL;
     // Stat for Average VL)
-    Stats::Scalar SumVL;
+    statistics::Scalar SumVL;
     // Stat for Average VL)
-    Stats::Formula AverageVL;
+    statistics::Formula AverageVL;
 private:
     uint64_t last_vtype;
     uint64_t last_vl;
